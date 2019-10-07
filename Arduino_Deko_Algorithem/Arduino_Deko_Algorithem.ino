@@ -112,7 +112,7 @@ void loop() {
    Serial.println(tE);
    
       
-   tE=tE+1;
+   tE=tE+3;
    
    delay(2000);
 }
@@ -125,30 +125,35 @@ void Dekogleichung1(){
 }
 
 void Dekogleichung2_3(){
-  Pambtolmax=0;
   for(int i=0;i<numGewebe;i++){
    
-   PigtE= Pigt0[i] + ((Piig - Pigt0[i]) * (1 - pow(2, (-tE/t12[i])))); 
-     
-   Pigt0[i]=PigtE;
+    
   
+   PigtE= Pigt0[i] + ((Piig - Pigt0[i]) * (1 - pow(2, (-tE/t12[i])))); //Funktioniert 
      
+   
+    
+     
+    Pigt0[i]=PigtE;
+  
+    
+    
+    
+    //Serial.println(t12[i]);
+    Serial.println(i);
+    Serial.println(Pigt0[i]);
+    
+   
+  
   Pambtol=(PigtE-a[i])*b[i];
-/*
-Serial.print(i);
-Serial.print(":  ");
-Serial.println(Pambtol);
- */ 
-  if(Pambtol>Pambtolmax){
+  
+  if(Pambtol<Pambtolmax){
     Pambtolmax=Pambtol;
   }
   }
-  Serial.print("Pambtolmax: ");
-  Serial.println(Pambtolmax);
  
 }
-void Nullzeitberechnung(){
-  if(Nz>0){
+void Nullzeitberechnung(){   //funktioniert nicht
   for(int e=0;e<numGewebe;e++){
   
      x= -1*(((airp/b[e]+a[e]-Pigt0[e])/(Piig-Pigt0[e]))+1);
@@ -156,22 +161,18 @@ void Nullzeitberechnung(){
   if(x>0){
     
     Nz_G= -1* log(x)/log(2)*t12[e];
- 
-   
 
-    if(Nz_G<Nz&&Nz_G>0){
+    if(Nz_G<Nz){
       Nz=Nz_G;
       }
-       
-     }
-    if(Nz<0){
-      Nz=0;
-      }
+    }
+    
+    
     
     
     }
   
-  Serial.print("Nullzeit:  ");
-  Serial.println(Nz);
- }
+  
+
+ 
 }
